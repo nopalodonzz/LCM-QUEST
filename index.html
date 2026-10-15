@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>LCM QUEST - Kembara Pokok Faktor & GSTK (KSSM Matematik)</title>
+  <title>LCM QUEST - Kembara Pokok Faktor & GSTK</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
@@ -125,7 +125,7 @@
       width: 100%;
       max-width: 1200px;
       display: grid;
-      grid-template-columns: minmax(320px, 480px) 1fr;
+      grid-template-columns: minmax(320px, 460px) 1fr;
       gap: 16px;
       align-items: start;
     }
@@ -137,7 +137,7 @@
       }
     }
 
-    /* LEFT: PAC-MAN CANVAS */
+    /* MAZE CANVAS */
     .maze-card {
       background: var(--card-bg);
       border: 3px solid var(--border-blue);
@@ -148,7 +148,7 @@
       align-items: center;
       box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
       width: 100%;
-      max-width: 480px;
+      max-width: 460px;
       position: relative;
     }
 
@@ -157,8 +157,8 @@
       background: #000;
       border-radius: 10px;
       overflow: hidden;
-      border: 2px solid #1e3a8a;
-      box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+      border: 3px solid #1e3a8a;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
       touch-action: none;
     }
 
@@ -172,7 +172,7 @@
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(14, 165, 233, 0.9);
+      background: rgba(14, 165, 233, 0.95);
       border: 2px solid #fff;
       color: #fff;
       font-family: var(--font-retro);
@@ -184,6 +184,7 @@
       animation: pulse 1.2s infinite;
       box-shadow: 0 0 15px rgba(56, 189, 248, 0.7);
       z-index: 5;
+      white-space: nowrap;
     }
 
     @keyframes pulse {
@@ -227,7 +228,7 @@
     .dbtn-down { grid-column: 2; grid-row: 2; }
     .dbtn-right { grid-column: 3; grid-row: 2; }
 
-    /* RIGHT: LEARNING PANEL */
+    /* LEARNING PANEL */
     .learning-panel {
       width: 100%;
       display: flex;
@@ -277,7 +278,6 @@
       background: #38bdf8;
     }
 
-    /* MISSION STORY CARD */
     .story-desc {
       background: rgba(15, 23, 42, 0.85);
       border-left: 4px solid var(--pacman-yellow);
@@ -348,7 +348,7 @@
       font-weight: bold;
     }
 
-    /* LCM WORKSPACE QUIZ */
+    /* LCM QUIZ WORKSPACE */
     .lcm-quiz-container {
       background: #0b1120;
       border: 2px solid var(--accent-purple);
@@ -457,7 +457,7 @@
       color: #6ee7b7;
     }
 
-    /* MODAL OVERLAYS */
+    /* MODALS */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -538,6 +538,7 @@
       display: none;
       z-index: 1100;
       pointer-events: none;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -570,14 +571,14 @@
 
   <!-- MAIN CONTAINER -->
   <main class="game-container">
-    <!-- LEFT: PACMAN MAZE -->
+    <!-- PACMAN CANVAS -->
     <section class="maze-card">
       <div class="canvas-wrapper">
         <canvas id="gameCanvas" width="440" height="480"></canvas>
         <div class="freeze-banner" id="freezeBanner">❄️ MAZE DIBEKUKAN (FASA GSTK)</div>
       </div>
 
-      <!-- VIRTUAL D-PAD (MOBILE) -->
+      <!-- VIRTUAL D-PAD -->
       <div class="dpad-container">
         <button class="dbtn dbtn-up" id="btnUp">▲</button>
         <button class="dbtn dbtn-left" id="btnLeft">◀</button>
@@ -586,9 +587,9 @@
       </div>
     </section>
 
-    <!-- RIGHT: EDUCATIONAL PANELS -->
+    <!-- RIGHT PANEL -->
     <section class="learning-panel">
-      <!-- SITUATION & MISSION CARD -->
+      <!-- STORY CARD -->
       <div class="panel-card">
         <div class="panel-header">
           <div class="panel-title">
@@ -612,12 +613,10 @@
           </div>
           <span style="font-size: 11px; color: #94a3b8;">*Nombor betul akan terus mengisi slot daun '?'</span>
         </div>
-        <div class="trees-grid" id="treesContainer">
-          <!-- Dynamically populated -->
-        </div>
+        <div class="trees-grid" id="treesContainer"></div>
       </div>
 
-      <!-- GSTK SOLVER QUIZ CARD -->
+      <!-- GSTK SOLVER CARD -->
       <div class="panel-card lcm-quiz-container" id="quizWorkspace" style="opacity: 0.5; pointer-events: none;">
         <div class="panel-header">
           <div class="panel-title" style="color: #c084fc;">
@@ -628,9 +627,7 @@
 
         <div class="quiz-step">
           <span class="step-label">Langkah 1: Berdasarkan pokok faktor di atas, pilih pendaraban kuasa tertinggi yang betul untuk mencari GSTK:</span>
-          <div class="radio-choices" id="choicesContainer">
-            <!-- Dynamically populated options -->
-          </div>
+          <div class="radio-choices" id="choicesContainer"></div>
         </div>
 
         <div class="quiz-step">
@@ -645,25 +642,25 @@
     </section>
   </main>
 
-  <!-- TOAST PENALTY ALERT -->
+  <!-- TOAST PENALTY -->
   <div class="toast-alert" id="toastAlert">⚠️ -1 NYAWA! NOMBOR ITU BUKAN FAKTOR PERDANA!</div>
 
-  <!-- MODAL: WELCOME SPLASH -->
+  <!-- MODAL: WELCOME -->
   <div class="modal-overlay" id="welcomeModal">
     <div class="modal-box">
       <h2 class="modal-title">SELAMAT DATANG KE<br><span style="color: #00d2ff;">LCM QUEST!</span></h2>
       <p style="font-size: 14px; color: #cbd5e1; line-height: 1.6; margin: 14px 0;">
-        Kembara Pac-Man berasaskan Kurikulum KSSM Matematik Tingkatan 1 (LS 2.2.2 & LS 2.2.3).<br><br>
-        1. Teliti situasi harian sebelum bermain.<br>
-        2. Cari & makan **faktor perdana (akar/daun)** untuk melengkapkan pokok.<br>
-        3. Awas! Makan nombor salah akan menolak **1 Nyawa**.<br>
-        4. Selesaikan rumus GSTK tanpa gangguan hantu!
+        Kembara Pac-Man Matematik KSSM Tingkatan 1 (LS 2.2.2 & LS 2.2.3).<br><br>
+        1. Baca situasi masalah harian.<br>
+        2. Makan <strong>faktor perdana (akar pokok)</strong> untuk penuhkan cabang '?' di sebelah kanan.<br>
+        3. Awas! Makan nombor bukan faktor perdana akan tolak <strong>1 Nyawa</strong>.<br>
+        4. Selesaikan rumus GSTK tanpa gangguan hantu apabila maze membeku!
       </p>
       <button class="modal-btn" id="btnStartGame">▶ TEKAN UNTUK MULA BERMAIN</button>
     </div>
   </div>
 
-  <!-- MODAL: MISSION BRIEFING -->
+  <!-- MODAL: BRIEFING -->
   <div class="modal-overlay" id="modalBriefing" style="display: none;">
     <div class="modal-box">
       <div style="font-family: var(--font-retro); font-size: 11px; color: var(--border-blue); margin-bottom: 6px;" id="briefingSubtitle">TAHAP 1</div>
@@ -679,7 +676,7 @@
     </div>
   </div>
 
-  <!-- MODAL: STAGE CLEARED -->
+  <!-- MODAL: STAGE WIN -->
   <div class="modal-overlay" id="modalWin" style="display: none;">
     <div class="modal-box" style="border-color: var(--emerald-green);">
       <h2 class="modal-title" style="color: var(--emerald-green);">TAHAP SELESAI! 🌟</h2>
@@ -703,83 +700,95 @@
 
   <script>
     /* =========================================================================
-       AUDIO SYSTEM (Pure Web Audio API - Zero External Dependencies)
+       AUDIO SYSTEM (Pure Web Audio API)
        ========================================================================= */
     class RetroAudio {
       constructor() {
         this.ctx = null;
       }
       init() {
-        if (!this.ctx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          this.ctx = new AudioContext();
-        }
-        if (this.ctx.state === 'suspended') {
-          this.ctx.resume();
+        try {
+          if (!this.ctx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioContext();
+          }
+          if (this.ctx && this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+        } catch (e) {
+          console.warn("Audio Context init fallback:", e);
         }
       }
       playDot() {
         if (!this.ctx) return;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(320, this.ctx.currentTime);
-        gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.06);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(this.ctx.currentTime + 0.06);
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(320, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.06);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.06);
+        } catch (e) {}
       }
       playCorrectFactor() {
         if (!this.ctx) return;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(440, this.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.25);
-        gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.3);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(this.ctx.currentTime + 0.3);
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.25);
+          gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.3);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.3);
+        } catch (e) {}
       }
       playPenalty() {
         if (!this.ctx) return;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(160, this.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(70, this.ctx.currentTime + 0.35);
-        gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.35);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(this.ctx.currentTime + 0.35);
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(160, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(70, this.ctx.currentTime + 0.35);
+          gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.35);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.35);
+        } catch (e) {}
       }
       playWin() {
         if (!this.ctx) return;
-        const notes = [523.25, 659.25, 783.99, 1046.50];
-        notes.forEach((freq, idx) => {
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = 'square';
-          osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.12);
-          gain.gain.setValueAtTime(0.12, this.ctx.currentTime + idx * 0.12);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.12 + 0.2);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start(this.ctx.currentTime + idx * 0.12);
-          osc.stop(this.ctx.currentTime + idx * 0.12 + 0.25);
-        });
+        try {
+          const notes = [523.25, 659.25, 783.99, 1046.50];
+          notes.forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.12);
+            gain.gain.setValueAtTime(0.12, this.ctx.currentTime + idx * 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.12 + 0.2);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(this.ctx.currentTime + idx * 0.12);
+            osc.stop(this.ctx.currentTime + idx * 0.12 + 0.25);
+          });
+        } catch (e) {}
       }
     }
     const audio = new RetroAudio();
 
     /* =========================================================================
-       5 CURRICULUM LEVELS DATA (KSSM Tingkatan 1 - Bab 2: GSTK)
+       5 LEVEL CURRICULUM DATA
        ========================================================================= */
     const LEVELS_DATA = [
       {
@@ -839,7 +848,7 @@
       {
         level: 4,
         title: "MISI 4: PAKEJ HOTDOG & ROTI",
-        story: "Roti hotdog dijual dalam bungkusan 8 keping, manakala sosej sosej dijual dalam bungkusan 12 batang. Anda mahu membeli bilangan roti dan sosej yang sama tanpa sebarang baki. Cari daun faktor untuk menentukan bilangan minimum hotdog!",
+        story: "Roti hotdog dijual dalam bungkusan 8 keping, manakala sosej dijual dalam bungkusan 12 batang. Anda mahu membeli bilangan roti dan sosej yang sama tanpa sebarang baki. Cari daun faktor untuk menentukan bilangan minimum hotdog!",
         unit: "keping/batang",
         trees: [
           { number: 8, primesNeeded: [2, 2, 2], filled: [false, false, false] },
@@ -876,24 +885,9 @@
     ];
 
     /* =========================================================================
-       GAME STATE & VARIABLES
+       GRID MAP (22 COLS x 24 ROWS)
+       1 = Dinding Biru, 0 = Titik Makanan (Pellet), 2 = Ruang Kosong / Terowong
        ========================================================================= */
-    let currentLevelIndex = 0;
-    let score = 0;
-    let lives = 3;
-    let isGameRunning = false;
-    let isQuizSolvingActive = false;
-    let briefingInterval = null;
-    let briefingTimeLeft = 10;
-
-    // Canvas & Grid settings
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    const TILE_SIZE = 20;
-    const COLS = 22;
-    const ROWS = 24;
-
-    // Maze grid map: 1 = Wall, 0 = Pellet dot, 2 = Empty/Portal
     const BASE_MAZE = [
       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
       [1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1],
@@ -924,7 +918,20 @@
     let maze = [];
     let numberItems = [];
 
-    // Pacman
+    let currentLevelIndex = 0;
+    let score = 0;
+    let lives = 3;
+    let isGameRunning = false;
+    let isQuizSolvingActive = false;
+    let briefingInterval = null;
+    let briefingTimeLeft = 10;
+
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const TILE_SIZE = 20;
+    const COLS = 22;
+    const ROWS = 24;
+
     let pacman = {
       x: 10 * TILE_SIZE + 10,
       y: 16 * TILE_SIZE + 10,
@@ -932,11 +939,9 @@
       dirY: 0,
       nextDirX: 0,
       nextDirY: 0,
-      speed: 2,
-      angle: 0.2
+      speed: 2
     };
 
-    // Ghosts
     let ghosts = [
       { x: 9 * TILE_SIZE + 10, y: 10 * TILE_SIZE + 10, dirX: 1, dirY: 0, color: '#ef4444', speed: 1.5 },
       { x: 10 * TILE_SIZE + 10, y: 10 * TILE_SIZE + 10, dirX: -1, dirY: 0, color: '#f472b6', speed: 1.5 },
@@ -944,9 +949,7 @@
       { x: 12 * TILE_SIZE + 10, y: 10 * TILE_SIZE + 10, dirX: 0, dirY: 1, color: '#fb923c', speed: 1.5 }
     ];
 
-    /* =========================================================================
-       DOM ELEMENTS
-       ========================================================================= */
+    /* DOM REFS */
     const scoreVal = document.getElementById('scoreVal');
     const livesContainer = document.getElementById('livesContainer');
     const levelBadge = document.getElementById('levelBadge');
@@ -962,7 +965,6 @@
     const quizFeedback = document.getElementById('quizFeedback');
     const toastAlert = document.getElementById('toastAlert');
 
-    // Modals
     const welcomeModal = document.getElementById('welcomeModal');
     const modalBriefing = document.getElementById('modalBriefing');
     const briefingTimer = document.getElementById('briefingTimer');
@@ -974,24 +976,21 @@
     const modalGameOver = document.getElementById('modalGameOver');
 
     /* =========================================================================
-       INIT & STAGE SETUP
+       INITIALIZE LEVEL
        ========================================================================= */
     function initLevel(lvlIdx) {
       currentLevelIndex = lvlIdx;
       const data = LEVELS_DATA[currentLevelIndex];
 
-      // Clone trees and set filled = false
       data.trees.forEach(t => {
         t.filled = new Array(t.primesNeeded.length).fill(false);
       });
 
-      // Update Header & Story UI
       levelBadge.textContent = `${data.level} / 5`;
       missionLevelTitle.textContent = data.title;
       missionStoryText.textContent = data.story;
       updateLivesDisplay();
 
-      // Reset workspace
       isQuizSolvingActive = false;
       freezeBanner.style.display = 'none';
       quizWorkspace.style.opacity = '0.4';
@@ -1003,10 +1002,10 @@
       buildQuizChoices(data);
       renderFactorTrees();
 
-      // Deep copy maze
+      // Salin susunan maze asal dengan tepat
       maze = BASE_MAZE.map(row => [...row]);
 
-      // Reset Pacman
+      // Tetapkan posisi permulaan Pac-Man
       pacman.x = 10 * TILE_SIZE + 10;
       pacman.y = 16 * TILE_SIZE + 10;
       pacman.dirX = 0;
@@ -1014,21 +1013,19 @@
       pacman.nextDirX = 0;
       pacman.nextDirY = 0;
 
-      // Reset Ghosts
+      // Tetapkan kedudukan rumah hantu
       ghosts[0].x = 9 * TILE_SIZE + 10;  ghosts[0].y = 10 * TILE_SIZE + 10;
       ghosts[1].x = 10 * TILE_SIZE + 10; ghosts[1].y = 10 * TILE_SIZE + 10;
       ghosts[2].x = 11 * TILE_SIZE + 10; ghosts[2].y = 10 * TILE_SIZE + 10;
       ghosts[3].x = 12 * TILE_SIZE + 10; ghosts[3].y = 10 * TILE_SIZE + 10;
 
-      // Spawn Number Orbs into Maze
       spawnMazeNumbers(data);
-
-      // Launch 10s Mission Briefing Modal
       startBriefingPhase(data);
     }
 
     function spawnMazeNumbers(data) {
       numberItems = [];
+      // Tempatkan nombor di laluan maze yang strategik dan boleh dilalui
       const validSpots = [
         { c: 1, r: 1 }, { c: 20, r: 1 },
         { c: 1, r: 4 }, { c: 20, r: 4 },
@@ -1039,11 +1036,9 @@
         { c: 10, r: 4 }, { c: 10, r: 18 }
       ];
 
-      // Collect required prime leaves
       const neededPrimes = [];
       data.trees.forEach(t => neededPrimes.push(...t.primesNeeded));
 
-      // Combine needed primes with distractors
       const allNumbersToPlace = [...neededPrimes, ...data.distractors];
       allNumbersToPlace.sort(() => Math.random() - 0.5);
 
@@ -1059,9 +1054,7 @@
       });
     }
 
-    /* =========================================================================
-       10-SECOND MISSION BRIEFING AUTO-START
-       ========================================================================= */
+    /* BRIEFING */
     function startBriefingPhase(data) {
       isGameRunning = false;
       briefingSubtitle.textContent = `TAHAP ${data.level} DARI 5`;
@@ -1090,9 +1083,7 @@
       isGameRunning = true;
     }
 
-    /* =========================================================================
-       FACTOR TREE RENDERING (DYNAMIC SVG WITH REAL-TIME LEAF FILLING)
-       ========================================================================= */
+    /* POKOK FAKTOR SVG */
     function renderFactorTrees() {
       treesContainer.innerHTML = '';
       const data = LEVELS_DATA[currentLevelIndex];
@@ -1112,7 +1103,6 @@
         svgWrap.innerHTML = generateTreeSVG(tree);
         box.appendChild(svgWrap);
 
-        // Expression line (e.g. 6 = 2 x 3)
         const exp = document.createElement('div');
         exp.className = 'tree-index-equation';
         const parts = tree.primesNeeded.map((p, i) => tree.filled[i] ? p : '?');
@@ -1129,23 +1119,19 @@
       const count = tree.primesNeeded.length;
       let svgContent = `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`;
 
-      // Positions for child nodes
       const leafY = 110;
       const stepX = w / (count + 1);
 
-      // Draw connecting branches
       for (let i = 0; i < count; i++) {
         const leafX = stepX * (i + 1);
         svgContent += `<line x1="${rootX}" y1="${rootY}" x2="${leafX}" y2="${leafY}" stroke="#64748b" stroke-width="3" stroke-dasharray="2,2"/>`;
       }
 
-      // Draw Root Node
       svgContent += `
         <circle cx="${rootX}" cy="${rootY}" r="20" fill="#a855f7" stroke="#ffffff" stroke-width="2"/>
         <text x="${rootX}" y="${rootY + 6}" font-family="'Press Start 2P', monospace" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold">${tree.number}</text>
       `;
 
-      // Draw Leaf Nodes (Real-time filled)
       for (let i = 0; i < count; i++) {
         const leafX = stepX * (i + 1);
         const isFilled = tree.filled[i];
@@ -1166,9 +1152,7 @@
       return svgContent;
     }
 
-    /* =========================================================================
-       NUMBER COLLECTION & PENALTY LOGIC
-       ========================================================================= */
+    /* KUTIP NOMBOR & PENALTI */
     function checkNumberCollection(px, py) {
       const data = LEVELS_DATA[currentLevelIndex];
 
@@ -1178,7 +1162,6 @@
           if (dist < 15) {
             item.collected = true;
 
-            // Check if this number is needed by any uncompleted leaf
             let matched = false;
             for (let t of data.trees) {
               for (let i = 0; i < t.primesNeeded.length; i++) {
@@ -1192,19 +1175,16 @@
             }
 
             if (matched) {
-              // CORRECT PRIME NUMBER
               audio.playCorrectFactor();
               score += 100;
               scoreVal.textContent = score;
               renderFactorTrees();
 
-              // Check if all trees are complete
               const allTreesComplete = data.trees.every(t => t.filled.every(f => f === true));
               if (allTreesComplete) {
                 activateFreezeAndQuiz();
               }
             } else {
-              // INCORRECT DISTRACTOR -> LOSE 1 LIFE
               audio.playPenalty();
               lives--;
               updateLivesDisplay();
@@ -1232,9 +1212,7 @@
       livesContainer.textContent = hearts || '💀 TIADA';
     }
 
-    /* =========================================================================
-       TOTAL MAZE FREEZE & GSTK SOLVER ACTIVATION
-       ========================================================================= */
+    /* FREEZE & QUIZ GSTK */
     function activateFreezeAndQuiz() {
       isQuizSolvingActive = true;
       freezeBanner.style.display = 'block';
@@ -1258,7 +1236,6 @@
       });
     }
 
-    // Submit LCM Quiz
     btnSubmitLCM.addEventListener('click', handleQuizSubmission);
     lcmInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') handleQuizSubmission();
@@ -1288,11 +1265,10 @@
 
       if (isNaN(enteredValue) || enteredValue !== data.correctLCM) {
         quizFeedback.className = 'quiz-feedback feedback-error';
-        quizFeedback.textContent = `Pengiraan GSTK belum tepat. Hitung semula hasil darab susunan pilihan anda!`;
+        quizFeedback.textContent = "Pengiraan GSTK belum tepat. Hitung semula hasil darab susunan pilihan anda!";
         return;
       }
 
-      // SUCCESS! STAGE CLEARED
       audio.playWin();
       score += 300;
       scoreVal.textContent = score;
@@ -1308,9 +1284,7 @@
       }, 1000);
     }
 
-    /* =========================================================================
-       PAC-MAN & GHOST ENGINE (CANVAS 60FPS)
-       ========================================================================= */
+    /* PAC-MAN & GHOST ENGINE */
     function isWall(col, row) {
       if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return true;
       return maze[row][col] === 1;
@@ -1332,7 +1306,6 @@
     function updatePacman() {
       if (isQuizSolvingActive || !isGameRunning) return;
 
-      // Check next desired turn
       if (pacman.nextDirX !== 0 || pacman.nextDirY !== 0) {
         if (canMoveTo(pacman.x + pacman.nextDirX * pacman.speed, pacman.y + pacman.nextDirY * pacman.speed)) {
           pacman.dirX = pacman.nextDirX;
@@ -1342,27 +1315,23 @@
         }
       }
 
-      // Move in current direction
       if (canMoveTo(pacman.x + pacman.dirX * pacman.speed, pacman.y + pacman.dirY * pacman.speed)) {
         pacman.x += pacman.dirX * pacman.speed;
         pacman.y += pacman.dirY * pacman.speed;
       }
 
-      // Screen warp tunnels
       if (pacman.x < 0) pacman.x = canvas.width - 2;
       else if (pacman.x >= canvas.width) pacman.x = 0;
 
-      // Eat small dots
       const currentGridCol = Math.floor(pacman.x / TILE_SIZE);
       const currentGridRow = Math.floor(pacman.y / TILE_SIZE);
       if (maze[currentGridRow] && maze[currentGridRow][currentGridCol] === 0) {
-        maze[currentGridRow][currentGridCol] = 2; // emptied
+        maze[currentGridRow][currentGridCol] = 2; // Titik dimakan
         score += 10;
         scoreVal.textContent = score;
         audio.playDot();
       }
 
-      // Check Factor Number Orbs
       checkNumberCollection(pacman.x, pacman.y);
     }
 
@@ -1370,12 +1339,10 @@
       if (isQuizSolvingActive || !isGameRunning) return;
 
       ghosts.forEach(g => {
-        // Move ghost
         if (canMoveTo(g.x + g.dirX * g.speed, g.y + g.dirY * g.speed)) {
           g.x += g.dirX * g.speed;
           g.y += g.dirY * g.speed;
         } else {
-          // Pick a random available direction
           const dirs = [
             { x: 1, y: 0 }, { x: -1, y: 0 },
             { x: 0, y: 1 }, { x: 0, y: -1 }
@@ -1388,7 +1355,6 @@
           }
         }
 
-        // Check collision with Pac-man (ONLY IF NOT FROZEN)
         const dist = Math.hypot(g.x - pacman.x, g.y - pacman.y);
         if (dist < 14) {
           audio.playPenalty();
@@ -1407,48 +1373,53 @@
     }
 
     /* =========================================================================
-       CANVAS RENDERING LOOP
+       CANVAS MAZE DRAWING
        ========================================================================= */
     function drawMaze() {
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Draw Walls & Pellets
+      if (!maze || maze.length === 0) return;
+
+      // 1. Lukis dinding dan titik makanan (pellets)
       for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
           const tile = maze[r][c];
           if (tile === 1) {
+            // Blok dinding luar
             ctx.fillStyle = '#1e3a8a';
             ctx.fillRect(c * TILE_SIZE, r * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            // Garisan neon biru berkilau
             ctx.strokeStyle = '#00d2ff';
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 1.5;
             ctx.strokeRect(c * TILE_SIZE + 1, r * TILE_SIZE + 1, TILE_SIZE - 2, TILE_SIZE - 2);
           } else if (tile === 0) {
-            ctx.fillStyle = '#fbbf24';
+            // Titik makanan (pellet)
+            ctx.fillStyle = '#ffde59';
             ctx.beginPath();
-            ctx.arc(c * TILE_SIZE + 10, r * TILE_SIZE + 10, 2.5, 0, Math.PI * 2);
+            ctx.arc(c * TILE_SIZE + 10, r * TILE_SIZE + 10, 2.8, 0, Math.PI * 2);
             ctx.fill();
           }
         }
       }
 
-      // Draw Number Orbs in Maze (Neutral Neon Cyan - No Color Bias)
+      // 2. Lukis orbs nombor faktor bercahaya
       numberItems.forEach(item => {
         if (!item.collected) {
           ctx.save();
           ctx.shadowColor = '#00d2ff';
-          ctx.shadowBlur = 10;
+          ctx.shadowBlur = 12;
           ctx.fillStyle = '#0f172a';
           ctx.beginPath();
           ctx.arc(item.x, item.y, 11, 0, Math.PI * 2);
           ctx.fill();
 
           ctx.strokeStyle = '#00d2ff';
-          ctx.lineWidth = 2;
+          ctx.lineWidth = 2.5;
           ctx.stroke();
 
           ctx.fillStyle = '#ffffff';
-          ctx.font = 'bold 11px monospace';
+          ctx.font = 'bold 12px monospace';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(item.value, item.x, item.y);
@@ -1456,7 +1427,7 @@
         }
       });
 
-      // Draw Pac-Man
+      // 3. Lukis Pac-Man
       ctx.save();
       ctx.translate(pacman.x, pacman.y);
       let angle = 0;
@@ -1473,7 +1444,7 @@
       ctx.fill();
       ctx.restore();
 
-      // Draw Ghosts (Normal or Frozen Ice Blue)
+      // 4. Lukis Hantu
       ghosts.forEach(g => {
         ctx.save();
         ctx.fillStyle = isQuizSolvingActive ? '#38bdf8' : g.color;
@@ -1488,7 +1459,7 @@
         ctx.closePath();
         ctx.fill();
 
-        // Eyes
+        // Mata hantu
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
         ctx.arc(g.x - 3, g.y - 2, 2.5, 0, Math.PI * 2);
@@ -1501,7 +1472,6 @@
         ctx.arc(g.x + 3 + g.dirX, g.y - 2 + g.dirY, 1.2, 0, Math.PI * 2);
         ctx.fill();
 
-        // Ice Snowflake indicator when frozen
         if (isQuizSolvingActive) {
           ctx.fillStyle = '#ffffff';
           ctx.font = '10px monospace';
@@ -1523,11 +1493,9 @@
       modalGameOver.style.display = 'flex';
     }
 
-    /* =========================================================================
-       USER CONTROLS & LISTENERS
-       ========================================================================= */
+    /* KAWALAN KEYBOARD & BUTANG */
     window.addEventListener('keydown', (e) => {
-      if (document.activeElement === lcmInput) return; // Typing in input box
+      if (document.activeElement === lcmInput) return;
 
       if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
         pacman.nextDirX = 0; pacman.nextDirY = -1;
@@ -1540,13 +1508,11 @@
       }
     });
 
-    // Touch Virtual D-Pad
     document.getElementById('btnUp').addEventListener('touchstart', (e) => { e.preventDefault(); pacman.nextDirX = 0; pacman.nextDirY = -1; });
     document.getElementById('btnDown').addEventListener('touchstart', (e) => { e.preventDefault(); pacman.nextDirX = 0; pacman.nextDirY = 1; });
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => { e.preventDefault(); pacman.nextDirX = -1; pacman.nextDirY = 0; });
     document.getElementById('btnRight').addEventListener('touchstart', (e) => { e.preventDefault(); pacman.nextDirX = 1; pacman.nextDirY = 0; });
 
-    // Buttons
     document.getElementById('btnStartGame').addEventListener('click', () => {
       audio.init();
       welcomeModal.style.display = 'none';
@@ -1575,7 +1541,9 @@
       initLevel(currentLevelIndex);
     });
 
-    // Start Engine
+    // Inisialisasi awal maze pada canvas sebaik sahaja laman dimuatkan
+    maze = BASE_MAZE.map(row => [...row]);
+    renderFactorTrees();
     requestAnimationFrame(gameLoop);
   </script>
 </body>
